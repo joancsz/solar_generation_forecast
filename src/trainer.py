@@ -236,7 +236,7 @@ class Trainer:
         plot_generation_predicted_vs_observed(pd.Series(p,self.y_val.index),
                                             self.y_val,
                                             title='Generation Predicted vs Observed',
-                                            path_to='imgs/pred_vs_obs_final_model.jpg')
+                                            path_to='imgs/train/pred_vs_obs_final_model.jpg')
 
         return final_model
 
