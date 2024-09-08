@@ -1,0 +1,22 @@
+train:
+    default_target_name: 'generation'
+    xgboost_space: 
+    - [0.001, 0.3]  # learning rate
+    - [3, 30]                      # max_depth
+    - [0.05, 10]                   # min_child_weight
+    - [0.05, 1.0]                  # subsample
+    - [0.1, 1.0]                   # colsample_bytree
+    - [100, 1000]                  # n_estimators
+    - [0, 1]                       # gamma
+    - [0, 1]                       # lambda
+    - [0, 1]                       # alpha
+    random_forest_space:   
+    - [100, 1000]       # n_estimators
+    - [3, 30]           # max_depth
+    - [2, 20]           # min_samples_split
+    - [1, 10]           # min_samples_leaf
+    - [0.1, 1.0]        # max_features (fração de características)
+    - [False, True]            # bootstrap (0 = False, 1 = True)
+
+predict:
+        columns_order: ['d2m', 'irradiance', 'sp', 't2m', 'tp', 'wsp', 'sin(hour)', 'cos(hour)']

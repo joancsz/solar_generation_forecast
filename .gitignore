@@ -1,0 +1,4 @@
+/env
+*/__pycache__
+/data/geracao_ons/*
+model_train_ec.ipynb
