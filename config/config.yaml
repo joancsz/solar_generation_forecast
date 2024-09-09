@@ -19,4 +19,4 @@ train:
     - [False, True]            # bootstrap (0 = False, 1 = True)
 
 predict:
-        columns_order: ['d2m', 'irradiance', 'sp', 't2m', 'tp', 'wsp', 'sin(hour)', 'cos(hour)']
+        columns_order: ['d2m', 'irradiance', 'sp', 't2m', 'tp', 'wsp', 'sin(hour)', 'cos(hour)', 'sin(month)', 'cos(month)']

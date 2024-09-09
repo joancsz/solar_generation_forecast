@@ -1,7 +1,7 @@
 from config import config
 
 from src.trainer import Trainer
-from src.operational import load_train_dataframe
+from src.data_process import load_train_dataframe
 
 cfg = config['train']
 

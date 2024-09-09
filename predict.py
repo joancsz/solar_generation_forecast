@@ -1,5 +1,5 @@
 from config import config
-from src.operational import load_features_dataframe, negative_to_zero
+from src.data_process import load_features_dataframe, negative_to_zero, bias_removal
 from src.visualization import plot_generation_vs_irradiance
 
 import joblib
@@ -14,9 +14,11 @@ def main():
     data = load_features_dataframe()
     model = joblib.load('model/model.joblib')
     prediction = model.predict(data)
-    prediction = negative_to_zero(prediction)
 
-    data['generation'] = prediction
+    prediction = negative_to_zero(prediction)
+    prediction = pd.Series(index=data.index, data=prediction, name='generation')
+    prediction = bias_removal(prediction)
+    data = pd.concat([data, prediction], axis=1)
 
     today = date(2024,6,15)
     today_str = today.strftime("%Y_%m_%d")

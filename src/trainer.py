@@ -1,6 +1,6 @@
 from config import config
 from .visualization import plot_generation_predicted_vs_observed
-from .operational import negative_to_zero
+from .data_process import negative_to_zero, bias_removal
 
 import pandas as pd
 import numpy as np
@@ -10,7 +10,7 @@ from sklearn.metrics import mean_absolute_error
 from xgboost import XGBRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.ensemble import StackingRegressor
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, RidgeCV
 
 from skopt import gp_minimize
 import joblib
@@ -197,6 +197,7 @@ class Trainer:
         model.fit(self.X_train_for_val, self.y_train_for_val)
         p = model.predict(self.X_val)
         p = negative_to_zero(p)
+        self.predicted = pd.Series(data=p, index=self.y_val.index, name = 'generation')
 
         print('MAE (MW):', mean_absolute_error(self.y_val, p))
 
@@ -204,7 +205,7 @@ class Trainer:
             self.save_model(model)
 
         print('Plotting at imgs/')
-        plot_generation_predicted_vs_observed(pd.Series(p,self.y_val.index),
+        plot_generation_predicted_vs_observed(self.predicted,
                                             self.y_val,
                                             title='Generation Predicted vs Observed',
                                             path_to='imgs/pred_vs_obs_final_model.jpg')
@@ -222,10 +223,13 @@ class Trainer:
                     ('rf', RandomForestRegressor(**rf_params))]
 
         print('Evaluating the final model')
-        final_model = StackingRegressor(estimators=estimators, final_estimator=LinearRegression(), n_jobs=-1, cv=5)
+        final_model = StackingRegressor(estimators=estimators, final_estimator=RidgeCV(), n_jobs=-1, cv=5)
         final_model.fit(self.X_train_for_val, self.y_train_for_val)
         p = final_model.predict(self.X_val)
         p = negative_to_zero(p)
+
+        self.predicted = pd.Series(data=p, index=self.y_val.index, name = 'generation')
+        self.predicted = bias_removal(self.predicted)
 
         print('MAE (MW):', mean_absolute_error(self.y_val, p))
 
@@ -233,7 +237,7 @@ class Trainer:
             self.save_model(final_model)
 
         print('Plotting at imgs/')
-        plot_generation_predicted_vs_observed(pd.Series(p,self.y_val.index),
+        plot_generation_predicted_vs_observed(self.predicted,
                                             self.y_val,
                                             title='Generation Predicted vs Observed',
                                             path_to='imgs/train/pred_vs_obs_final_model.jpg')
