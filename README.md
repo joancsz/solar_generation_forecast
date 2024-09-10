@@ -9,13 +9,13 @@ You can check the data by running the code below
 ```bash
 git clone https://github.com/joancsz/solar_generation_forecast.git
 ```
-##Enviroment
+## Enviroment
 
 You can install the environment by running the code below
 ```bash
 pip install -r requirements.txt
 ```
-##Warning 🚨
+## Warning 🚨
 You might need to fix deprecated code when using the library Skoptimize
 
 # The model
