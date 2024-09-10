@@ -27,7 +27,7 @@ In the image below, the average hourly shape by month is displayed for both obse
 
 A model was built stacking two weak learners (XGBRegressor and RandomForestRegressor) as represented in the fluxogram below.
 
-![ModelConfig](./imgs/eval/model_config.jpg)
+![ModelConfig](./imgs/eval/model_config.png)
 
 Finally, the model was able to represent the daily hourly shape when applied to various forecast of the ECMWF model (10 days horizon each)
 
