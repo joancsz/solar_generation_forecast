@@ -6,7 +6,7 @@ import seaborn as sns
 import datetime as dt
 plt.style.use('fivethirtyeight')
 
-def plot_features_importances(importances:list, names:list, title='', path_to=None):
+def plot_features_importances(importances:list, names:list, title='', path_to=None) -> None:
     """
     Plot features importances for XGboost or RandomForest models
     """
@@ -19,7 +19,7 @@ def plot_features_importances(importances:list, names:list, title='', path_to=No
     plt.show()
     return None
 
-def plot_generation_vs_irradiance(generation:pd.Series, irradiance:pd.Series, title='', path_to=None):
+def plot_generation_vs_irradiance(generation:pd.Series, irradiance:pd.Series, title='', path_to=None) -> None:
     """
     Plot a line plot with Generation and Irradiance in different yaxis
     """
@@ -41,7 +41,7 @@ def plot_generation_vs_irradiance(generation:pd.Series, irradiance:pd.Series, ti
     return None
 
 
-def plot_generation_predicted_vs_observed(predicted:pd.Series, observed:pd.Series, title='', path_to=None):
+def plot_generation_predicted_vs_observed(predicted:pd.Series, observed:pd.Series, title:str = '', path_to:str = None) -> None:
     """
     Plot a line plot with Generation and Irradiance in different yaxis
     """

@@ -3,15 +3,21 @@ from config import config
 import pandas as pd
 import numpy as np
 
-def negative_to_zero(values):
+def negative_to_zero(values: np.array) -> np.array:
     """
     Function to post process forecasted generation to not enable negative values
+
+    Args:
+    values: np.array
     """
     return np.where(values < 0, 0, values)
 
-def process_features_dataframe(df):
+def process_features_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     """
     Receive a feature dataframe, build the aditional and return for a new forecast
+
+    Args:
+    df: pd.DataFrame
     """
     cfg = config['predict']
     df.index = pd.to_datetime(df.index)
@@ -19,7 +25,7 @@ def process_features_dataframe(df):
     df = df.T.reindex(index=cfg['columns_order']).T
     return df
 
-def load_features_dataframe():
+def load_features_dataframe() -> pd.DataFrame:
     """
     Read a sample file with the features, build the aditional and return for a new forecast
     """
@@ -27,7 +33,7 @@ def load_features_dataframe():
     df = process_features_dataframe(df)
     return df
 
-def load_train_dataframe():
+def load_train_dataframe() -> pd.DataFrame:
     """
     Read the file with the features and the file with the target, could be a consume from a database
     """
@@ -40,7 +46,7 @@ def load_train_dataframe():
     df = build_features(df)
     return df
 
-def build_features(df):
+def build_features(df: pd.DataFrame) -> pd.DataFrame:
     """
     Build aditional features based on time
     """
@@ -51,7 +57,7 @@ def build_features(df):
     df['cos(month)'] = np.cos(df.index.month / 12 * 2 * np.pi)
     return df
 
-def bias_removal(predicted: pd.Series):
+def bias_removal(predicted: pd.Series) -> pd.Series:
     """
     Apply bias removal on the forecast, fixed by percentual of the value
     """
@@ -68,9 +74,10 @@ def bias_removal(predicted: pd.Series):
 
 def post_process(predicted: pd.Series):
     """
+    #FIX ME
     Apply post process pipeline to the predicted values, should be pd.Series 
     """
-
+    
     predicted = negative_to_zero(predicted)
     predicted = bias_removal(predicted)
     return predicted
