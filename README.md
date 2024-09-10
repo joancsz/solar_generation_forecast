@@ -33,4 +33,4 @@ Finally, the model was able to represent the daily hourly shape when applied to 
 
 ![ModelEvaluation](./imgs/eval/forecasts_vs_obs_model_eval.jpg)
 
-Evaluating the model using Mean Absolute Error (MAE) in hourly series an average of 4.6 MWh was observed, and when compared on weekly series this error decreases to 2 MWh on average.
+Evaluating the model using Mean Absolute Error (MAE) in hourly series an average of 4.6 MW was observed, and when compared on weekly series this error decreases to 2 MW on average.
